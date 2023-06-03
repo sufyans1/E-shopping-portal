@@ -106,7 +106,7 @@ namespace E_shopping_portal.Controllers
             return View();
         }
 
-        // POST: EshoppingPortal/Create
+        /// POST: EshoppingPortal/Create
         [HttpPost]
         public ActionResult SignupUser(HomeSignupModel signup)
         {
@@ -119,7 +119,6 @@ namespace E_shopping_portal.Controllers
                     if (repository.SignupUser(signup))
                     {
                         ViewBag.Message = "Sign up successful";
-                        return View();
                     }
                     else
                     {
@@ -132,13 +131,14 @@ namespace E_shopping_portal.Controllers
                     ViewBag.Message = "Validation failed";
                 }
 
-                return View();
+
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return View();
+
             }
+            return View();
         }
 
         // GET: EshoppingPortal/Edit/5

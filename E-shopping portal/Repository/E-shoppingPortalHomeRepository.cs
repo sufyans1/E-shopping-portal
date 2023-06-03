@@ -52,34 +52,47 @@ namespace E_shopping_portal.Repository
         {
 
             ConnectDb();
-            SqlCommand command = new SqlCommand("spi_CustomerRegistration", con);
-            command.CommandType = CommandType.StoredProcedure;
-
-            command.Parameters.AddWithValue("@CustomerFirstName", signup.FirstName);
-            command.Parameters.AddWithValue("@CustomerLastName", signup.LastName);
-            command.Parameters.AddWithValue("@CustomerDateOfBirth", signup.DateOfBirth);
-            command.Parameters.AddWithValue("@CustomerGender", signup.Gender);
-            command.Parameters.AddWithValue("@CustomerPhoneNumber", signup.PhoneNumber);
-            command.Parameters.AddWithValue("@CustomerEmailAddress", signup.EmailAddress);
-            command.Parameters.AddWithValue("@CustomerAddress", signup.Address);
-            command.Parameters.AddWithValue("@CustomerState", signup.State);
-            command.Parameters.AddWithValue("@CustomerCity", signup.City);
-            command.Parameters.AddWithValue("@CustomerUsername", signup.Username);
-            command.Parameters.AddWithValue("@CustomerPassword", signup.Password);
-            command.Parameters.AddWithValue("@UserType", 0);
-            con.Open();
-
-            try
+            string querry = "SELECT CustomerUsername FROM tbl_CustomerRegistration WHERE CustomerUsername = '" + signup.Username + "'";
+            SqlCommand commandexist = new SqlCommand(querry, con);
+            SqlDataAdapter adapter = new SqlDataAdapter(commandexist);
+            DataTable datatable = new DataTable();
+            adapter.Fill(datatable);
+            if (datatable.Rows.Count > 0)
             {
-                int i = command.ExecuteNonQuery();
-                return true;
-            }
-            catch
-            {
-
                 return false;
             }
-            finally { con.Close(); }
+            else
+            {
+                SqlCommand command = new SqlCommand("spi_CustomerRegistration", con);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@CustomerFirstName", signup.FirstName);
+                command.Parameters.AddWithValue("@CustomerLastName", signup.LastName);
+                command.Parameters.AddWithValue("@CustomerDateOfBirth", signup.DateOfBirth);
+                command.Parameters.AddWithValue("@CustomerGender", signup.Gender);
+                command.Parameters.AddWithValue("@CustomerPhoneNumber", signup.PhoneNumber);
+                command.Parameters.AddWithValue("@CustomerEmailAddress", signup.EmailAddress);
+                command.Parameters.AddWithValue("@CustomerAddress", signup.Address);
+                command.Parameters.AddWithValue("@CustomerState", signup.State);
+                command.Parameters.AddWithValue("@CustomerCity", signup.City);
+                command.Parameters.AddWithValue("@CustomerUsername", signup.Username);
+                command.Parameters.AddWithValue("@CustomerPassword", signup.Password);
+                command.Parameters.AddWithValue("@UserType", 0);
+                con.Open();
+
+                try
+                {
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+
+                catch
+                {
+
+                    return false;
+                }
+                finally { con.Close(); }
+            }
         }
     }
 }
