@@ -62,18 +62,25 @@ namespace E_shopping_portal.Controllers
         public ActionResult SigninUser(HomeSiginModel signin)
         {
             E_shoppingPortalHomeRepository repository = new E_shoppingPortalHomeRepository();
+
+
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (repository.SigninUser(signin))
+                    if (repository.SigninUser(signin) == false)
                     {
-                        ViewBag.Message = "Sign in succesful";
+                        ViewBag.Message = "user is admin";
+                        return View();
+                    }
+                    else if (repository.SigninUser(signin) == true)
+                    {
+                        ViewBag.Message = "user is customer";
                         return View();
                     }
                     else
                     {
-                        ViewBag.Message = "Sign in failed";
+                        ViewBag.Message = "user doesnt exist";
                         return View();
                     }
                 }
@@ -83,7 +90,11 @@ namespace E_shopping_portal.Controllers
                     ViewBag.Message = "Validation failed";
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View();
+            }
 
             return View();
         }

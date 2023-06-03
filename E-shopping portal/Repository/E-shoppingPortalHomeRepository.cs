@@ -1,5 +1,4 @@
 ﻿using E_shopping_portal.Models;
-using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -35,18 +34,24 @@ namespace E_shopping_portal.Repository
             dataAdapter.Fill(datatable);
             if (datatable.Rows.Count > 0)
             {
-
-                return true;
+                if (datatable.Rows[0].Field<int>("UserType") == 0)
+                {
+                    return true;
+                }
+                else if (datatable.Rows[0].Field<int>("UserType") == 1)
+                {
+                    return false;
+                }
             }
-            else { return false; }
-
+            return false;
         }
+
+
         [HttpPost]
         public bool SignupUser(HomeSignupModel signup)
         {
 
             ConnectDb();
-
             SqlCommand command = new SqlCommand("spi_CustomerRegistration", con);
             command.CommandType = CommandType.StoredProcedure;
 
@@ -69,26 +74,12 @@ namespace E_shopping_portal.Repository
                 int i = command.ExecuteNonQuery();
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
 
                 return false;
             }
             finally { con.Close(); }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 }
