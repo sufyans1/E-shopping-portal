@@ -11,7 +11,9 @@ namespace E_shopping_portal.Repository
         private SqlConnection con;
         private string connectionstring;
 
-
+        /// <summary>
+        /// To establish connection with database
+        /// </summary>
         private void ConnectDb()
         {
             try
@@ -21,6 +23,38 @@ namespace E_shopping_portal.Repository
             }
             catch { }
         }
+
+
+
+        private bool UserIsExist()
+        {
+            ConnectDb();
+            HomeSignupModel model = new HomeSignupModel();
+            string querry = "SELECT * FROM tbl_CustomerRegistration WHERE CustomerUsername = '" + model.Username + "'";
+            SqlDataAdapter adapter = new SqlDataAdapter(querry, con);
+
+            con.Open();
+            DataTable datatable = new DataTable();
+            adapter.Fill(datatable);
+            if (datatable.Rows.Count > 0)
+            {
+                return true;
+                con.Close();
+            }
+            else
+            {
+                return false;
+                con.Close();
+            }
+
+        }
+        /// <summary>
+        /// To perform sign in operation for the user
+        /// </summary>
+        /// <param name="signin"></param>
+        /// <returns>
+        /// Returns usertype as integer  
+        /// </returns>
         public int SigninUser(HomeSiginModel signin)
         {
 
@@ -46,22 +80,21 @@ namespace E_shopping_portal.Repository
             return 3;
         }
 
-
+        /// <summary>
+        /// TO perform signup operations for the  new user
+        /// </summary>
+        /// <param name="signup"></param>
+        /// <returns>
+        /// Return true if the operation is succesful False if any error occurs or the username is already exist
+        /// </returns>
         [HttpPost]
         public bool SignupUser(HomeSignupModel signup)
         {
-
-            ConnectDb();
-            string querry = "SELECT CustomerUsername FROM tbl_CustomerRegistration WHERE CustomerUsername = '" + signup.Username + "'";
-            SqlCommand commandexist = new SqlCommand(querry, con);
-            SqlDataAdapter adapter = new SqlDataAdapter(commandexist);
-            DataTable datatable = new DataTable();
-            adapter.Fill(datatable);
-            if (datatable.Rows.Count > 0)
+            if (UserIsExist())
             {
                 return false;
             }
-            else
+            else if (!UserIsExist()) { }
             {
                 SqlCommand command = new SqlCommand("spi_CustomerRegistration", con);
                 command.CommandType = CommandType.StoredProcedure;
@@ -94,5 +127,6 @@ namespace E_shopping_portal.Repository
                 finally { con.Close(); }
             }
         }
+
     }
 }
