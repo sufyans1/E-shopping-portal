@@ -1,0 +1,33 @@
+﻿
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/StyleHomePage.css" rel="stylesheet" />
+<section class="hero">
+    <div class="hero-content">
+        <ul>
+            <li>@Html.ActionLink("Shop now", "SigninUser", "EshoppingPortal", new { area = "" }, new { @class = "btn btn-primary" })</li>
+        </ul>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature-item">
+        <i class="fas fa-truck"></i>
+        <h2>Fast Delivery</h2>
+        <p>Enjoy quick and reliable delivery for all your purchases.</p>
+    </div>
+    <div class="feature-item">
+        <i class="fas fa-credit-card"></i>
+        <h2>Secure Payments</h2>
+        <p>Shop with confidence using our secure payment methods.</p>
+    </div>
+    <div class="feature-item">
+        <i class="fas fa-heart"></i>
+        <h2>Trending Products</h2>
+        <p>Discover the latest and most popular products in the market.</p>
+    </div>
+</section>
+

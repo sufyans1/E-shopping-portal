@@ -1,0 +1,4 @@
+﻿input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    visibility: hidden;
+}
