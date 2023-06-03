@@ -68,14 +68,14 @@ namespace E_shopping_portal.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (repository.SigninUser(signin) == false)
-                    {
-                        ViewBag.Message = "user is admin";
-                        return View();
-                    }
-                    else if (repository.SigninUser(signin) == true)
+                    if (repository.SigninUser(signin) == 0)
                     {
                         ViewBag.Message = "user is customer";
+                        return View();
+                    }
+                    else if (repository.SigninUser(signin) == 1)
+                    {
+                        ViewBag.Message = "user is admin";
                         return View();
                     }
                     else

@@ -21,7 +21,7 @@ namespace E_shopping_portal.Repository
             }
             catch { }
         }
-        public bool SigninUser(HomeSiginModel signin)
+        public int SigninUser(HomeSiginModel signin)
         {
 
             ConnectDb();
@@ -36,14 +36,14 @@ namespace E_shopping_portal.Repository
             {
                 if (datatable.Rows[0].Field<int>("UserType") == 0)
                 {
-                    return true;
+                    return 0;
                 }
                 else if (datatable.Rows[0].Field<int>("UserType") == 1)
                 {
-                    return false;
+                    return 1;
                 }
             }
-            return false;
+            return 3;
         }
 
 
