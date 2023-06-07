@@ -42,6 +42,14 @@ namespace E_shopping_portal.Controllers
                 return View();
             }
         }
+        //GET view use list
+        public ActionResult ViewUserList()
+        {
+            AdminRepository adminrepository = new AdminRepository();
+            ModelState.Clear();
+            return View(adminrepository.ViewUserList());
+
+        }
     }
 
 }
