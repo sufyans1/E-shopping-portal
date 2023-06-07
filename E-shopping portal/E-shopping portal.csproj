@@ -150,6 +150,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Images\2448638.jpg" />
     <Content Include="Content\Images\pngegg.png" />
+    <Content Include="Content\StyleAdminDash.css" />
     <Content Include="Content\StyleHomePage.css" />
     <Content Include="Content\StyleSignin.css" />
     <Content Include="Content\StyleSignup.css" />
@@ -191,6 +192,7 @@
     <Content Include="Views\EshoppingPortal\ThankYou.cshtml" />
     <Content Include="Views\EshoppingPortal\Index.cshtml" />
     <Content Include="Views\EshoppingPortal\SignupUser.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

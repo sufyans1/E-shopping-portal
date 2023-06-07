@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Your home store</title>
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/StyleAdminDash.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <nav class="dashboard" id="navbar">
+            <div class="title">
+                <div class="logo">
+                    <img src="~/Content/Images/pngegg.png">
+                </div>
+                <div class="title name">
+                    @Html.ActionLink("E-shopping portal", "Index", "Admin")
+                </div>
+            </div>
+            <div class="dashlinks">
+                <ul class="dash">
+                    <li>@Html.ActionLink("Dash board", "Index", "Admin", new { area = "" }, new { @class = "dash-link" })</li>
+                    <li>@Html.ActionLink("My products", "MyProducts", "Admin", new { area = "" }, new { @class = "dash-link" })</li>
+                    <li>@Html.ActionLink("Add new admin", "AddNewAdmin", "Admin", new { area = "" }, new { @class = "dash-link" })</li>
+                    <li>@Html.ActionLink("View user list", "ViewUserList", "Admin", new { area = "" }, new { @class = "dash-link" })</li>
+                    <li>@Html.ActionLink("View feedback", "ViewFeedback", "Admin", new { area = "" }, new { @class = "dash-link" })</li>
+                    <li>@Html.ActionLink("View contact us message", "ContactUsMessage", "Admin", new { area = "" }, new { @class = "dash-link" })</li>
+                    <li>@Html.ActionLink("Log out", "Logout", "Admin", new { area = "" }, new { @class = "dash-link" })</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="body-content content">
+            @RenderBody()
+
+        </div>
+    </div>
+    <hr>
+    <footer>
+        @DateTime.Now.Year - E-shopping portal
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

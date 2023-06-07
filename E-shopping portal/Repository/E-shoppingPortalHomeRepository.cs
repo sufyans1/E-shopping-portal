@@ -38,13 +38,13 @@ namespace E_shopping_portal.Repository
             adapter.Fill(datatable);
             if (datatable.Rows.Count > 0)
             {
-                return true;
                 con.Close();
+                return true;
             }
             else
             {
-                return false;
                 con.Close();
+                return false;
             }
 
         }
