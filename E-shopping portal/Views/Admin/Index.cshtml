@@ -1,0 +1,24 @@
+﻿@model E_shopping_portal.Models.AdminHomeModel
+
+@{
+    ViewBag.Title = "Admin dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Admin panel</h2>
+
+<div>
+    <h4>Welcome admin</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfUsers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfUsers)
+        </dd>
+
+    </dl>
+</div>
+

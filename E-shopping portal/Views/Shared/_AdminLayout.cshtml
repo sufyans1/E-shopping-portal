@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Your home store</title>
+    @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/StyleAdminDash.css" rel="stylesheet" />
 </head>
@@ -34,12 +35,11 @@
             @RenderBody()
 
         </div>
+        <hr>
     </div>
-    <hr>
-    <footer>
-        @DateTime.Now.Year - E-shopping portal
-    </footer>
+
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap-lumen")
     @RenderSection("scripts", required: false)
 </body>
 </html>

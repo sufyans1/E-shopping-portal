@@ -76,7 +76,7 @@ namespace E_shopping_portal.Controllers
                     else if (repository.SigninUser(signin) == 1)
                     {
                         ViewBag.Message = "user is admin";
-                        return View();
+                        return RedirectToAction("Index", "Admin");
                     }
                     else
                     {
@@ -95,7 +95,6 @@ namespace E_shopping_portal.Controllers
                 ViewBag.Message = ex.Message;
                 return View();
             }
-
             return View();
         }
 
