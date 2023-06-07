@@ -52,7 +52,7 @@ namespace E_shopping_portal.Repository
 
                         new HomeSignupModel
                         {
-                            Id = Convert.ToInt32(datarow["CustomerID"]),
+                            Id = Convert.ToInt32(datarow["CustomerId"]),
                             FirstName = Convert.ToString(datarow["CustomerFirstName"]),
                             LastName = Convert.ToString(datarow["CustomerLastName"]),
                             DateOfBirth = Convert.ToDateTime(datarow["CustomerDateOfBirth"]),
@@ -74,6 +74,59 @@ namespace E_shopping_portal.Repository
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally { connection.Close(); }
+        }
+        public bool DeleteUser(int id)
+        {
+            try
+            {
+                ConnectDb();
+                SqlCommand command = new SqlCommand("DELETE FROM tbl_CustomerRegistration WHERE CustomerId ='" + id + "'", connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+            finally { connection.Close(); }
+        }
+        public List<HomeContactUSModel> ContactUsMessages()
+        {
+            try
+            {
+                List<HomeContactUSModel> list = new List<HomeContactUSModel>();
+                ConnectDb();
+                SqlCommand command = new SqlCommand("SELECT * FROM tbl_ContactUS", connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                foreach (DataRow datarow in table.Rows)
+                {
+                    list.Add(
+
+                        new HomeContactUSModel
+                        {
+                            Id = Convert.ToInt32(datarow["id"]),
+                            Name = Convert.ToString(datarow["Name"]),
+                            Email = Convert.ToString(datarow["Email"]),
+                            Message = Convert.ToString(datarow["Message"]),
+
+                        }
+
+                        );
+                }
+
+                return list;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
                 return null;
             }
             finally { connection.Close(); }

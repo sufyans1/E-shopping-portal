@@ -50,6 +50,28 @@ namespace E_shopping_portal.Controllers
             return View(adminrepository.ViewUserList());
 
         }
+        public ActionResult DeleteUser(int id)
+        {
+            AdminRepository adminrepository = new AdminRepository();
+            if (adminrepository.DeleteUser(id))
+            {
+                ViewBag.message = "Deleted succesfully";
+                return RedirectToAction("ViewUserList", "Admin");
+            }
+            else
+            {
+                ViewBag.message = "Couldnt delete row";
+                return RedirectToAction("ViewUserList", "Admin");
+            }
+
+        }
+        public ActionResult ContactUsMessages()
+        {
+
+            AdminRepository adminrepository = new AdminRepository();
+            ModelState.Clear();
+            return View(adminrepository.ContactUsMessages());
+        }
     }
 
 }
