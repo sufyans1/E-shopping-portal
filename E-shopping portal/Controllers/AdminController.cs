@@ -6,16 +6,46 @@ namespace E_shopping_portal.Controllers
 {
     public class AdminController : Controller
     {
+        public bool IsAdminLoggedIn()
+        {
+            if (Session["username"] != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+
+
+
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            if (IsAdminLoggedIn())
+            {
+                return View();
+            }
+            else { return RedirectToAction("SigninUser", "EshoppingPortal"); }
         }
 
         //GET Add new admin
         public ActionResult AddNewAdmin()
         {
-            return View();
+            if (IsAdminLoggedIn())
+            {
+                return View();
+            }
+            else { return RedirectToAction("SigninUser", "EshoppingPortal"); }
+        }
+        public ActionResult AdminLogout()
+        {
+
+            Session["username"] = Session["username"] = null;
+            return RedirectToAction("SigninUser", "EshoppingPortal");
         }
 
         [HttpPost]
@@ -45,32 +75,47 @@ namespace E_shopping_portal.Controllers
         //GET view use list
         public ActionResult ViewUserList()
         {
-            AdminRepository adminrepository = new AdminRepository();
-            ModelState.Clear();
-            return View(adminrepository.ViewUserList());
+            if (IsAdminLoggedIn())
+            {
+                AdminRepository adminrepository = new AdminRepository();
+                ModelState.Clear();
+
+                return View(adminrepository.ViewUserList());
+            }
+            else
+            { return RedirectToAction("SigninUser", "EshoppingPortal"); }
 
         }
         public ActionResult DeleteUser(int id)
         {
-            AdminRepository adminrepository = new AdminRepository();
-            if (adminrepository.DeleteUser(id))
+            if (IsAdminLoggedIn())
             {
-                ViewBag.message = "Deleted succesfully";
-                return RedirectToAction("ViewUserList", "Admin");
+
+                AdminRepository adminrepository = new AdminRepository();
+                if (adminrepository.DeleteUser(id))
+                {
+                    ViewBag.message = "Deleted succesfully";
+                    return RedirectToAction("ViewUserList", "Admin");
+                }
+                else
+                {
+                    ViewBag.message = "Couldnt delete row";
+                    return RedirectToAction("ViewUserList", "Admin");
+                }
             }
-            else
-            {
-                ViewBag.message = "Couldnt delete row";
-                return RedirectToAction("ViewUserList", "Admin");
-            }
+            else { return RedirectToAction("SigninUser", "Eshoppingportal"); }
 
         }
         public ActionResult ContactUsMessages()
         {
 
-            AdminRepository adminrepository = new AdminRepository();
-            ModelState.Clear();
-            return View(adminrepository.ContactUsMessages());
+            if (IsAdminLoggedIn())
+            {
+                AdminRepository adminrepository = new AdminRepository();
+                ModelState.Clear();
+                return View(adminrepository.ContactUsMessages());
+            }
+            else { return RedirectToAction("SigninUser", "EshoppingPortal"); }
         }
     }
 

@@ -10,22 +10,43 @@ namespace E_shopping_portal.Controllers
         // GET: EshoppingPortal
         public ActionResult Index()
         {
-            ViewBag.Title = "Home";
-            return View();
+            if (Session["username"] != null)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                ViewBag.Title = "Home";
+                return View();
+            }
 
         }
 
         // GET: About us 
         public ActionResult About()
         {
-            ViewBag.Title = "About us";
-            return View();
+            if (Session["username"] != null)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                ViewBag.Title = "About us";
+                return View();
+            }
         }
         // GET: Contact us 
         public ActionResult Contact()
         {
-            ViewBag.Title = "Contact us";
-            return View();
+            if (Session["username"] != null)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                ViewBag.Title = "Contact us";
+                return View();
+            }
         }
 
         [HttpPost]
@@ -53,8 +74,15 @@ namespace E_shopping_portal.Controllers
         // GET: EshoppingPortal/Details/5
         public ActionResult SigninUser()
         {
+            if (Session["username"] != null)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
 
-            return View();
+                return View();
+            }
         }
 
 
@@ -76,6 +104,7 @@ namespace E_shopping_portal.Controllers
                     else if (repository.SigninUser(signin) == 1)
                     {
                         ViewBag.Message = "user is admin";
+                        Session["username"] = signin.Username;
                         return RedirectToAction("Index", "Admin");
                     }
                     else
@@ -101,8 +130,14 @@ namespace E_shopping_portal.Controllers
         // GET: EshoppingPortal/Create
         public ActionResult SignupUser()
         {
-
-            return View();
+            if (Session["username"] != null)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         /// POST: EshoppingPortal/Create
