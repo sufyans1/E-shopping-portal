@@ -26,24 +26,24 @@ namespace E_shopping_portal.Repository
 
 
 
-        private bool UserIsExist()
+        private bool UserIsExist(HomeSignupModel signup)
         {
             ConnectDb();
-            HomeSignupModel model = new HomeSignupModel();
-            string querry = "SELECT * FROM tbl_CustomerRegistration WHERE CustomerUsername = '" + model.Username + "'";
-            SqlDataAdapter adapter = new SqlDataAdapter(querry, con);
+            string querry = "SELECT * FROM tbl_CustomerRegistration WHERE CustomerUsername = '" + signup.Username + "'";
 
             con.Open();
+            SqlDataAdapter adapter = new SqlDataAdapter(querry, con);
+
             DataTable datatable = new DataTable();
             adapter.Fill(datatable);
             if (datatable.Rows.Count > 0)
             {
-                con.Close();
+
                 return true;
             }
             else
             {
-                con.Close();
+
                 return false;
             }
 
@@ -90,15 +90,15 @@ namespace E_shopping_portal.Repository
         [HttpPost]
         public bool SignupUser(HomeSignupModel signup)
         {
-            if (UserIsExist())
+            E_shoppingPortalHomeRepository e_ShoppingPortalHomeRepository = new E_shoppingPortalHomeRepository();
+            if (e_ShoppingPortalHomeRepository.UserIsExist(signup))
             {
                 return false;
             }
-            else if (!UserIsExist()) { }
+            else if (!e_ShoppingPortalHomeRepository.UserIsExist(signup))
             {
                 SqlCommand command = new SqlCommand("spi_CustomerRegistration", con);
                 command.CommandType = CommandType.StoredProcedure;
-
                 command.Parameters.AddWithValue("@CustomerFirstName", signup.FirstName);
                 command.Parameters.AddWithValue("@CustomerLastName", signup.LastName);
                 command.Parameters.AddWithValue("@CustomerDateOfBirth", signup.DateOfBirth);
@@ -111,21 +111,24 @@ namespace E_shopping_portal.Repository
                 command.Parameters.AddWithValue("@CustomerUsername", signup.Username);
                 command.Parameters.AddWithValue("@CustomerPassword", signup.Password);
                 command.Parameters.AddWithValue("@UserType", 0);
-                con.Open();
+
+                ConnectDb();
 
                 try
                 {
+                    con.Open();
                     command.ExecuteNonQuery();
                     return true;
                 }
 
                 catch
                 {
-
                     return false;
                 }
                 finally { con.Close(); }
+
             }
+            return false;
         }
 
     }
