@@ -24,9 +24,9 @@ namespace E_shopping_portal.Repository
             {
                 SqlCommand command = new SqlCommand("spi_NewAdmin", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@FirstName", model.Name);
-                command.Parameters.AddWithValue("@Username", model.Username);
-                command.Parameters.AddWithValue("@Password", model.Password);
+                command.Parameters.AddWithValue("@FirstName", model.Name.Trim());
+                command.Parameters.AddWithValue("@Username", model.Username.Trim());
+                command.Parameters.AddWithValue("@Password", model.Password.Trim());
                 command.Parameters.AddWithValue("@UserType", 1);
                 connection.Open();
                 command.ExecuteNonQuery();
