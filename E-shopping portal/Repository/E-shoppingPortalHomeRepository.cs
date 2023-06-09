@@ -61,8 +61,8 @@ namespace E_shopping_portal.Repository
             ConnectDb();
             SqlCommand command = new SqlCommand("sps_SigninUser", con);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@CustomerUsername", signin.Username.Trim());
-            command.Parameters.AddWithValue("@CustomerPassword", signin.Password.Trim());
+            command.Parameters.AddWithValue("@CustomerUsername", signin.Username);
+            command.Parameters.AddWithValue("@CustomerPassword", signin.Password);
             SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
             DataTable datatable = new DataTable();
             dataAdapter.Fill(datatable);
@@ -99,24 +99,24 @@ namespace E_shopping_portal.Repository
             {
                 SqlCommand command = new SqlCommand("spi_CustomerRegistration", con);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@CustomerFirstName", signup.FirstName.Trim());
-                command.Parameters.AddWithValue("@CustomerLastName", signup.LastName.Trim());
+                command.Parameters.AddWithValue("@CustomerFirstName", signup.FirstName);
+                command.Parameters.AddWithValue("@CustomerLastName", signup.LastName);
                 command.Parameters.AddWithValue("@CustomerDateOfBirth", signup.DateOfBirth);
-                command.Parameters.AddWithValue("@CustomerGender", signup.Gender.Trim());
-                command.Parameters.AddWithValue("@CustomerPhoneNumber", signup.PhoneNumber.Trim());
-                command.Parameters.AddWithValue("@CustomerEmailAddress", signup.EmailAddress.Trim());
-                command.Parameters.AddWithValue("@CustomerAddress", signup.Address.Trim());
-                command.Parameters.AddWithValue("@CustomerState", signup.State.Trim());
-                command.Parameters.AddWithValue("@CustomerCity", signup.City.Trim());
-                command.Parameters.AddWithValue("@CustomerUsername", signup.Username.Trim());
-                command.Parameters.AddWithValue("@CustomerPassword", signup.Password.Trim());
+                command.Parameters.AddWithValue("@CustomerGender", signup.Gender);
+                command.Parameters.AddWithValue("@CustomerPhoneNumber", signup.PhoneNumber);
+                command.Parameters.AddWithValue("@CustomerEmailAddress", signup.EmailAddress);
+                command.Parameters.AddWithValue("@CustomerAddress", signup.Address);
+                command.Parameters.AddWithValue("@CustomerState", signup.State);
+                command.Parameters.AddWithValue("@CustomerCity", signup.City);
+                command.Parameters.AddWithValue("@CustomerUsername", signup.Username);
+                command.Parameters.AddWithValue("@CustomerPassword", signup.Password);
                 command.Parameters.AddWithValue("@UserType", 0);
 
                 ConnectDb();
+                con.Open();
 
                 try
                 {
-                    con.Open();
                     command.ExecuteNonQuery();
                     return true;
                 }
